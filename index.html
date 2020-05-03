@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>周期表</title>
+
+    <style>
+      #element {
+        margin-top: 20px;
+        width: 14rem;
+        text-align: center;
+      }
+
+      #number, #z-name, #name, #name-en, #group, #metal, #state {
+        margin: 0 auto;
+      }
+
+
+      /* #number, #z-name, #name, #name-en, #group, #metal, #state {
+        border: 1px solid red;
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="element" class="mx-auto">
+        <div class="card" style="width: 14rem;">
+          <div class="card-body">
+            <p id="number" class="card-text">1</p>
+            <h1 id="z-name" class="card-title display-1">Xe</h1>
+            <p id="name" class="card-text">アインスタイニウム</p>
+            <h6 id="name-en" class="card-subtitle mb-2 text-muted">Hydrogen</h6>
+            <p id="group" class="card-text">1</p>
+            <p id="metal" class="card-text">非金属元素</p>
+            <p id="state" class="card-text">常温で気体</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+      $(function() {
+        $('body').click(function() {
+          console.log("tap");
+        });
+      });
+    </script>
+  </body>
+</html>

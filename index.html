@@ -18,16 +18,15 @@
 
       #element {
         margin-top: 20px;
-        width: 14rem;
+        width: 18rem;
         text-align: center;
       }
 
-      #number, #z-name, #name, #name-en, #group, #metal, #state {
+      #number, #z-name, #name, #name-en, #group, #metal, #state, #notes {
         margin: 0 auto;
       }
 
-
-      /* #number, #z-name, #name, #name-en, #group, #metal, #state {
+      /* #number, #z-name, #name, #name-en, #group, #metal, #state, #notes {
         border: 1px solid red;
       } */
     </style>
@@ -35,15 +34,16 @@
   <body>
     <div class="container">
       <div id="element" class="mx-auto">
-        <div class="card" style="width: 14rem;">
+        <div class="card">
           <div class="card-body">
             <p id="number" class="card-text">原子番号</p>
-            <h1 id="z-name" class="card-title display-1">元素記号</h1>
+            <h1 id="z-name" class="card-title display-1">Z</h1>
             <p id="name" class="card-text">日本語名</p>
             <h6 id="name-en" class="card-subtitle mb-2 text-muted">英語名</h6>
             <p id="group" class="card-text">族</p>
             <p id="metal" class="card-text">金属</p>
             <p id="state" class="card-text">状態</p>
+            <h6 id="notes" class="card-subtitle mb-2 text-muted">備考</h6>
           </div>
         </div>
       </div>
@@ -64,15 +64,44 @@
           $('#z-name').text(e[i].z_name);
           $('#name').text(e[i].name);
           $('#name-en').text(e[i].name_en);
-          $('#group').text(e[i].group1 + ': ' + e[i].group2);
+          var group = e[i].group1 + '族';
+          if (e[i].group2 !== '') {
+            group = group + ': ' + e[i].group2;
+          }
+          $('#group').text(group);
           $('#metal').text(e[i].metal);
           $('#state').text(e[i].state);
+          $('#notes').text(e[i].notes);
 
+          $('#group').css('color', 'black');
+          $('#group').removeClass('text-primary');
+          $('#group').removeClass('text-success');
+          $('#group').removeClass('text-danger');
+          $('#group').removeClass('text-warning');
+          $('#group').removeClass('text-info');
+          if (e[i].group2 === 'アルカリ金属') {
+            $('#group').toggleClass('text-warning');
+          } else if (e[i].group2 === 'アルカリ土類金属') {
+            $('#group').toggleClass('text-success');
+          } else if (e[i].group2 === 'ハロゲン') {
+            $('#group').toggleClass('text-info');
+          } else if (e[i].group2 === '卑金属元素') {
+            $('#group').css('color', '#dd3');
+          } else if (e[i].group2 === '遷移金属') {
+            $('#group').toggleClass('text-primary');
+          } else if (e[i].group2 === '希土類元素 (ランタノイド)') {
+            $('#group').css('color', '#e0f');
+          } else if (e[i].group2 === 'アクチノイド') {
+            $('#group').css('color', 'c9b');
+          }
         };
 
-        set(index++);
+        // set(index++);
 
         $('body').click(function() {
+          if (index > e.length) {
+            index = 0;
+          }
           console.log("tap");
           set(index++);
         });

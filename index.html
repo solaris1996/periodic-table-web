@@ -16,6 +16,10 @@
         margin: 0;
       }
 
+      #container {
+        height: 100%;
+      }
+
       #element {
         margin-top: 20px;
         width: 18rem;
@@ -26,13 +30,17 @@
         margin: 0 auto;
       }
 
-      /* #number, #z-name, #name, #name-en, #group, #metal, #state, #notes {
-        border: 1px solid red;
+      /* #control, #container, #element, #card, #number, #z-name, #name, #name-en, #group, #metal, #state, #notes {
+        border: 1px solid red !important;
       } */
     </style>
   </head>
   <body>
-    <div class="container">
+    <nav id="control" class="nav justify-content-center">
+      <a href="#" id="normal-btn" class="nav-link disabled">normal</a>
+      <a href="#" id="random-btn" class="nav-link active">random</a>
+    </nav>
+    <div id="container" class="container">
       <div id="element" class="mx-auto">
         <div class="card">
           <div class="card-body">
@@ -57,9 +65,12 @@
     <script src="elements.js"></script>
     <script>
       $(function() {
-        var index = 0;
+        var mode = 'normal';
 
-        var set = function(i) {
+        var index = 0;
+        var indexRamdom = 0;
+
+        var setNormal = function(i) {
           $('#number').text(e[i].number);
           $('#z-name').text(e[i].z_name);
           $('#name').text(e[i].name);
@@ -98,14 +109,45 @@
           }
         };
 
-        // set(index++);
+        $('#normal-btn').click(function() {
+          console.log('normal');
+          mode = 'normal';
+          $('#normal-btn').removeClass('active');
+          $('#normal-btn').addClass('disabled');
+          $('#random-btn').removeClass('disabled');
+          $('#random-btn').addClass('active');
+        });
 
-        $('body').click(function() {
-          if (index > e.length) {
-            index = 0;
+        $('#random-btn').click(function() {
+          console.log('random');
+          mode = 'random';
+          $('#normal-btn').removeClass('disabled');
+          $('#normal-btn').addClass('active');
+          $('#random-btn').removeClass('active');
+          $('#random-btn').addClass('disabled');
+        });
+
+        $('#container').click(function() {
+          if (mode === 'normal') {
+            if (index > e.length) {
+              index = 0;
+            }
+            setNormal(index++);
+          } else if (mode === 'random') {
+            if ($('#z-name').text() === '') {
+              setNormal(indexRamdom);
+            } else {
+              indexRamdom = Math.floor(Math.random() * e.length);
+              $('#number').text(e[indexRamdom].number);
+              $('#z-name').text('');
+              $('#name').text('');
+              $('#name-en').text('');
+              $('#group').text('');
+              $('#metal').text('');
+              $('#state').text('');
+              $('#notes').text('');
+            }
           }
-          console.log("tap");
-          set(index++);
         });
       });
     </script>

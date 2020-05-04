@@ -65,80 +65,66 @@
     <script src="elements.js"></script>
     <script>
       $(function() {
+
         var mode = 'normal';
 
-        var index = 0;
-        var indexRamdom = 0;
-
-        var setNormal = function(i) {
+        var set = function(i) {
           $('#number').text(e[i].number);
-          $('#z-name').text(e[i].z_name);
-          $('#name').text(e[i].name);
-          $('#name-en').text(e[i].name_en);
-          var group = e[i].group1 + '族';
-          if (e[i].group2 !== '') {
-            group = group + ': ' + e[i].group2;
-          }
-          $('#group').text(group);
-          $('#metal').text(e[i].metal);
-          $('#state').text(e[i].state);
-          $('#notes').text(e[i].notes);
-
-          $('#group').css('color', 'black');
-          $('#group').removeClass('text-primary');
-          $('#group').removeClass('text-success');
-          $('#group').removeClass('text-danger');
-          $('#group').removeClass('text-warning');
-          $('#group').removeClass('text-info');
-          if (e[i].group2 === 'アルカリ金属') {
-            $('#group').toggleClass('text-warning');
-          } else if (e[i].group2 === 'アルカリ土類金属') {
-            $('#group').toggleClass('text-success');
-          } else if (e[i].group2 === 'ハロゲン') {
-            $('#group').toggleClass('text-info');
-          } else if (e[i].group2 === '希ガス') {
-            $('#group').css('color', '#0f9');
-          } else if (e[i].group2 === '卑金属元素') {
-            $('#group').css('color', '#dd3');
-          } else if (e[i].group2 === '遷移金属') {
-            $('#group').toggleClass('text-primary');
-          } else if (e[i].group2 === '希土類元素 (ランタノイド)') {
-            $('#group').css('color', '#e0f');
-          } else if (e[i].group2 === 'アクチノイド') {
-            $('#group').css('color', 'c9b');
-          }
-        };
-
-        $('#normal-btn').click(function() {
-          console.log('normal');
-          mode = 'normal';
-          $('#normal-btn').removeClass('active');
-          $('#normal-btn').addClass('disabled');
-          $('#random-btn').removeClass('disabled');
-          $('#random-btn').addClass('active');
-        });
-
-        $('#random-btn').click(function() {
-          console.log('random');
-          mode = 'random';
-          $('#normal-btn').removeClass('disabled');
-          $('#normal-btn').addClass('active');
-          $('#random-btn').removeClass('active');
-          $('#random-btn').addClass('disabled');
-        });
-
-        $('#container').click(function() {
-          if (mode === 'normal') {
-            if (index > e.length) {
-              index = 0;
+            $('#z-name').text(e[i].z_name);
+            $('#name').text(e[i].name);
+            $('#name-en').text(e[i].name_en);
+            var group = e[i].group1 + '族';
+            if (e[i].group2 !== '') {
+              group = group + ': ' + e[i].group2;
             }
-            setNormal(index++);
-          } else if (mode === 'random') {
+            $('#group').text(group);
+            $('#metal').text(e[i].metal);
+            $('#state').text(e[i].state);
+            $('#notes').text(e[i].notes);
+
+            $('#group').css('color', 'black');
+            $('#group').removeClass('text-primary');
+            $('#group').removeClass('text-success');
+            $('#group').removeClass('text-danger');
+            $('#group').removeClass('text-warning');
+            $('#group').removeClass('text-info');
+            if (e[i].group2 === 'アルカリ金属') {
+              $('#group').toggleClass('text-warning');
+            } else if (e[i].group2 === 'アルカリ土類金属') {
+              $('#group').toggleClass('text-success');
+            } else if (e[i].group2 === 'ハロゲン') {
+              $('#group').toggleClass('text-info');
+            } else if (e[i].group2 === '希ガス') {
+              $('#group').css('color', '#0f9');
+            } else if (e[i].group2 === '卑金属元素') {
+              $('#group').css('color', '#dd3');
+            } else if (e[i].group2 === '遷移金属') {
+              $('#group').toggleClass('text-primary');
+            } else if (e[i].group2 === '希土類元素 (ランタノイド)') {
+              $('#group').css('color', '#e0f');
+            } else if (e[i].group2 === 'アクチノイド') {
+              $('#group').css('color', 'c9b');
+            }
+        }
+
+        var showSequencial = function() {
+          var i = 0;
+          return function() {
+            set(i);
+            if (i++ > e.length) {
+              i = 0;
+            }
+          }
+        }();
+
+        var showRandom = function() {
+          var i = 0;
+          return function() {
             if ($('#z-name').text() === '') {
-              setNormal(indexRamdom);
+              set(i);
             } else {
-              indexRamdom = Math.floor(Math.random() * e.length);
-              $('#number').text(e[indexRamdom].number);
+              i = Math.floor(Math.random() * e.length);
+              $('#number').text(e[i].number);
               $('#z-name').text('');
               $('#name').text('');
               $('#name-en').text('');
@@ -148,7 +134,29 @@
               $('#notes').text('');
             }
           }
+        }();
+
+        $('#container').on('click', function() {
+          if (mode === 'normal') {
+            showSequencial();
+          } else if (mode === 'random') {
+            showRandom();
+          }
         });
+
+        function makeModeToggler(m) {
+          return function() {
+            mode = m;
+            $('#normal-btn').toggleClass('active');
+            $('#normal-btn').toggleClass('disabled');
+            $('#random-btn').toggleClass('active');
+            $('#random-btn').toggleClass('disabled');
+          }
+        }
+
+        $('#normal-btn').on('click', makeModeToggler('normal'));
+        $('#random-btn').on('click', makeModeToggler('random'));
+
       });
     </script>
   </body>
